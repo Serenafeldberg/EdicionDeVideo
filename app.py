@@ -46,7 +46,7 @@ if uploaded_file:
         silence_thresh=silence_thresh,
         seek_step=1
     )
-    nonsilent.sort(key=lambda x: x[0])
+    nonsilent.sort(key=lambda x: x[0]) 
     
     # Clear previous segments
     for f_name in os.listdir(SEGMENTS_DIR):
