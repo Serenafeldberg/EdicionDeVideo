@@ -52,8 +52,43 @@ if uploaded_file:
     for f_name in os.listdir(SEGMENTS_DIR):
         os.remove(os.path.join(SEGMENTS_DIR, f_name))
 
-    st.write("## 2. Revisa y selecciona segmentos de audio")
+    st.write("## 2. Revisa y selecciona segmentos de video")
     selections = []
+    # for idx, (start_ms, end_ms) in enumerate(nonsilent):
+    #     # Apply padding
+    #     s = max(0, start_ms - 150)
+    #     e = min(len(audio), end_ms + 150)
+    #     start_s = s / 1000
+    #     end_s = e / 1000
+    #     duration = end_s - start_s
+
+    #     clip_path = os.path.join(SEGMENTS_DIR, f"segment_{idx:03d}.mp4")
+    #     if not os.path.exists(clip_path):
+    #         subprocess.run([
+    #             "ffmpeg", "-y", "-ss", str(start_s), "-i", input_path,
+    #             "-t", str(duration), "-c:v", "libx264", "-c:a", "aac", "-b:a", "128k", clip_path
+    #         ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+    #     # Display video and checkbox
+    #     st.write(f"- Segmento {idx}: {start_s:.3f}s → {end_s:.3f}s")
+    #     # with open(clip_path, "rb") as ca:
+    #     #     st.video(ca.read(), format="video/mp4")
+    #     import base64
+
+    #     with open(clip_path, "rb") as vid_file:
+    #         video_bytes = vid_file.read()
+    #         b64 = base64.b64encode(video_bytes).decode()
+    #         video_html = f"""
+    #         <video width="250" controls>
+    #             <source src="data:video/mp4;base64,{b64}" type="video/mp4">
+    #             Tu navegador no soporta el video.
+    #         </video>
+    #         """
+    #         st.markdown(video_html, unsafe_allow_html=True)
+
+    #     keep = st.checkbox("Conservar este segmento", key=f"keep_{idx}")
+    #     if keep:
+    #         selections.append((idx, start_s, end_s))
     for idx, (start_ms, end_ms) in enumerate(nonsilent):
         # Apply padding
         s = max(0, start_ms - 150)
@@ -68,6 +103,7 @@ if uploaded_file:
         keep = st.checkbox("Conservar este segmento", key=f"keep_{idx}")
         if keep:
             selections.append((idx, s/1000, e/1000))
+
 
     # When user finishes selecting
     if st.button("✅ Generar video editado"):
